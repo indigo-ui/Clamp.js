@@ -245,9 +245,19 @@
             }
         }
         else {
+            var origAttrib = element.getAttribute('data-clamp-orig-text');
+            var isOrigAttrib = !!origAttrib;
+            if (!origAttrib) {
+                origAttrib = originalText;
+            }
+            element.innerText = origAttrib;
+
             var height = getMaxHeight(clampValue);
             if (height <= element.clientHeight) {
                 clampedText = truncate(getLastChild(element), height);
+                if (clampedText.length < originalText.length && !isOrigAttrib) {
+                    element.setAttribute('data-clamp-orig-text', origAttrib);
+                }
             }
         }
         
